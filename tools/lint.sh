@@ -53,7 +53,7 @@ find_files() {
   local pattern="$1"
   local root
   for root in "${TARGETS[@]}"; do
-    find "${root}" -type f -name "${pattern}" -not -path '*/.git/*' 2>/dev/null
+    find "${root}" -type f -name "${pattern}" -not -path '*/.git/*' -not -path '*/.claude/*' -not -path '*/rpmbuild/*' 2>/dev/null
   done
 }
 
@@ -206,7 +206,7 @@ for root in "${TARGETS[@]}"; do
         err "missing KPackageStructure in $f"
       fi
     fi
-  done < <(find "${root}" -type f -path '*/plasma/look-and-feel/*/metadata.json' -not -path '*/.git/*' 2>/dev/null)
+  done < <(find "${root}" -type f -path '*/plasma/look-and-feel/*/metadata.json' -not -path '*/.git/*' -not -path '*/.claude/*' -not -path '*/rpmbuild/*' 2>/dev/null)
 done
 
 # each desktoptheme variant dir needs metadata.json (and warn-only plasmarc)
@@ -224,7 +224,7 @@ for root in "${TARGETS[@]}"; do
     if [[ ! -f "$d/plasmarc" ]]; then
       warn "desktoptheme variant $d is missing plasmarc (expected to be added separately)"
     fi
-  done < <(find "${root}" -type d -regex '.*/plasma/desktoptheme/[^/]+' -not -path '*/.git/*' 2>/dev/null)
+  done < <(find "${root}" -type d -regex '.*/plasma/desktoptheme/[^/]+' -not -path '*/.git/*' -not -path '*/.claude/*' -not -path '*/rpmbuild/*' 2>/dev/null)
 done
 
 info ""
