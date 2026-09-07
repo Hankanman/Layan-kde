@@ -715,4 +715,24 @@
   <path
      id="path111-0-6"
      d="m 263.08609,39.808015 v 8 h 50 v -8 z" />
+  <!-- decoration-maximized: flat square-corner variant for maximised windows (M10) -->
+  <rect id="decoration-maximized-center" x="400" y="45" width="50" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-top" x="400" y="35" width="50" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-bottom" x="400" y="95" width="50" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-left" x="390" y="45" width="10" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-right" x="450" y="45" width="10" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-topleft" x="390" y="35" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-topright" x="450" y="35" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-bottomleft" x="390" y="95" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-bottomright" x="450" y="95" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <!-- decoration-maximized-inactive: flat square-corner variant for maximised windows (M10) -->
+  <rect id="decoration-maximized-inactive-center" x="520" y="45" width="50" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-top" x="520" y="35" width="50" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-bottom" x="520" y="95" width="50" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-left" x="510" y="45" width="10" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-right" x="570" y="45" width="10" height="50" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-topleft" x="510" y="35" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-topright" x="570" y="35" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-bottomleft" x="510" y="95" width="10" height="10" style="opacity:1;fill:#31313a" />
+  <rect id="decoration-maximized-inactive-bottomright" x="570" y="95" width="10" height="10" style="opacity:1;fill:#31313a" />
 </svg>
