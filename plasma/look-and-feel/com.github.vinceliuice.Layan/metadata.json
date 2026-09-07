@@ -15,7 +15,7 @@
         "ServiceTypes": [
             "Plasma/LookAndFeel"
         ],
-        "Version": "0.1",
+        "Version": "1.0",
         "Website": "https://github.com/vinceliuice/Layan-kde"
     },
     "Keywords": "Desktop;Workspace;Appearance;Look and Feel;Logout;Lock;Suspend;Shutdown;Hibernate;",
@@ -26,7 +26,6 @@
         "kns://plasma-themes.knsrc/api.kde-look.org/1325241",
         "kns://aurorae.knsrc/api.kde-look.org/1325238",
         "kns://wallpaper.knsrc/api.kde-look.org/1309218",
-        "kns://sddmtheme.knsrc/api.kde-look.org/1325235",
         "kns://icons.knsrc/api.kde-look.org/1279924",
         "kns://xcursor.knsrc/api.kde-look.org/1365214"
     ]
