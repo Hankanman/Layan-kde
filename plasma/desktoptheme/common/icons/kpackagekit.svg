@@ -151,31 +151,7 @@
   <use
      x="0"
      y="0"
-     xlink:href="#g878"
-     id="use880"
-     transform="translate(-30.088099,39.213625)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#use880"
-     id="use882"
-     transform="translate(-24.481181,0.18977614)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#use884"
-     id="use886"
-     transform="translate(-30.657428,39.972732)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#software-updates-updates"
+     xlink:href="#kpackagekit-updates"
      id="software-updates-release"
      transform="translate(-53.745552,-0.06647708)"
      width="100%"
