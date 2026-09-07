@@ -9,6 +9,12 @@ its numbering).
 Modernisation for Plasma 6.7 / Fedora 44, following the plan in
 `REVIEW.md` section 7:
 
+- **Installer restarts plasmashell after --apply (B29)**
+  - Plasma 6.7's system tray keeps its item layout but renders the monochrome
+    icons blank when the icon theme is switched while the shell is running;
+    they only come back after a shell restart. `--apply`/`--apply-light` now
+    restart `plasma-plasmashell.service` (or `plasmashell --replace`) at the
+    end, so the panel is usable immediately.
 - **Installer can fetch Tela icons and Layan cursors (B9)**
   - New `install.sh --with-icons`, `--with-cursors` and `--full` shallow-clone
     vinceliuice's Tela-icon-theme and Layan-cursors repos and install them

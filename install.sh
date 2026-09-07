@@ -393,6 +393,19 @@ if [[ -n "$APPLY_THEME" ]]; then
     kwriteconfig6 --file "$KVANTUM_CONFIG" --group General --key theme "$KVANTUM_THEME"
     echo "Set Kvantum theme to ${KVANTUM_THEME} in ${KVANTUM_CONFIG}"
   fi
+
+  # plasmashell does not re-render system tray icons when the icon theme
+  # changes underneath it (Plasma 6.7): the tray keeps its layout but the
+  # monochrome icons stay blank until the shell is restarted. Restart it
+  # so --apply leaves a usable panel. Windows and apps are unaffected.
+  if [[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]] && pgrep -x plasmashell >/dev/null 2>&1; then
+    echo "Restarting plasmashell so the panel picks up the new icons..."
+    if command -v systemctl >/dev/null 2>&1 && systemctl --user is-active --quiet plasma-plasmashell.service; then
+      systemctl --user restart plasma-plasmashell.service || true
+    elif command -v plasmashell >/dev/null 2>&1; then
+      (setsid plasmashell --replace >/dev/null 2>&1 &)
+    fi
+  fi
 fi
 
 echo "Install finished."
