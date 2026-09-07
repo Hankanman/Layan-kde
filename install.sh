@@ -270,6 +270,52 @@ if [[ -n "$APPLY_THEME" ]]; then
     echo "Warning: plasma-apply-lookandfeel not found; theme installed but not activated." >&2
   fi
 
+  # The look-and-feel defaults name the Tela icon theme and the Layan cursor
+  # theme. System Settings fetches them from the KDE Store when it applies the
+  # theme, but plasma-apply-lookandfeel does not, so on a machine without them
+  # Plasma is left pointing at themes that do not exist and most shell icons
+  # (system tray, launcher, System Settings) vanish. Detect that and fall back
+  # to Breeze so the desktop is always usable.
+  theme_dir_exists() {
+    local kind="$1" name="$2" d
+    for d in "${HOME}/.local/share/${kind}" "${HOME}/.${kind}" "/usr/share/${kind}" "/usr/local/share/${kind}"; do
+      [[ -d "${d}/${name}" ]] && return 0
+    done
+    return 1
+  }
+
+  if [[ "$APPLY_THEME" == "light" ]]; then
+    WANT_ICONS="Tela"; FALLBACK_ICONS="breeze"
+    WANT_CURSORS="Layan-white-cursors"; FALLBACK_CURSORS="breeze_cursors"
+  else
+    WANT_ICONS="Tela-dark"; FALLBACK_ICONS="breeze-dark"
+    WANT_CURSORS="Layan-white-cursors"; FALLBACK_CURSORS="breeze_cursors"
+  fi
+
+  if ! theme_dir_exists icons "$WANT_ICONS"; then
+    echo "Icon theme ${WANT_ICONS} is not installed; using ${FALLBACK_ICONS} instead."
+    echo "  (install Tela from https://github.com/vinceliuice/Tela-icon-theme and re-run --apply to use it)"
+    CHANGEICONS=""
+    for c in /usr/libexec/plasma-changeicons /usr/lib64/libexec/plasma-changeicons /usr/lib/x86_64-linux-gnu/libexec/plasma-changeicons /usr/lib/libexec/plasma-changeicons; do
+      [[ -x "$c" ]] && { CHANGEICONS="$c"; break; }
+    done
+    if [[ -n "$CHANGEICONS" ]]; then
+      "$CHANGEICONS" "$FALLBACK_ICONS" || true
+    elif command -v kwriteconfig6 >/dev/null 2>&1; then
+      kwriteconfig6 --file kdeglobals --group Icons --key Theme "$FALLBACK_ICONS"
+    fi
+  fi
+
+  if ! theme_dir_exists icons "$WANT_CURSORS"; then
+    echo "Cursor theme ${WANT_CURSORS} is not installed; using ${FALLBACK_CURSORS} instead."
+    echo "  (install it from https://github.com/vinceliuice/Layan-cursors and re-run --apply to use it)"
+    if command -v plasma-apply-cursortheme >/dev/null 2>&1; then
+      plasma-apply-cursortheme "$FALLBACK_CURSORS" || true
+    elif command -v kwriteconfig6 >/dev/null 2>&1; then
+      kwriteconfig6 --file kcminputrc --group Mouse --key cursorTheme "$FALLBACK_CURSORS"
+    fi
+  fi
+
   if [[ "$USE_KVANTUM" -eq 1 ]] && command -v kwriteconfig6 >/dev/null 2>&1; then
     KVANTUM_CONFIG="${HOME}/.config/Kvantum/kvantum.kvconfig"
     mkdir -p "$(dirname "$KVANTUM_CONFIG")"

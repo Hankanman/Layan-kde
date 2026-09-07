@@ -9,6 +9,13 @@ its numbering).
 Modernisation for Plasma 6.7 / Fedora 44, following the plan in
 `REVIEW.md` section 7:
 
+- **Installer icon/cursor fallback (B9)**
+  - `install.sh --apply` / `--apply-light` now checks whether the Tela icon
+    theme and Layan cursor theme named in the look-and-feel `defaults` are
+    installed. If not, it applies `breeze-dark`/`breeze` icons and
+    `breeze_cursors` instead of leaving Plasma pointing at missing themes,
+    which made most shell icons (system tray, launcher, System Settings)
+    disappear.
 - **Installer and repo hygiene (B23, B26)**
   - Rewrote `install.sh` and `uninstall.sh`: `#!/usr/bin/env bash`,
     `set -euo pipefail`, refuse to run under `sh`, `$EUID`-based root

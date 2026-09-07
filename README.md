@@ -132,6 +132,12 @@ pair it with vinceliuice's other Layan packages:
 - Install [Tela icon theme](https://github.com/vinceliuice/Tela-icon-theme)
   for a more consistent look with the rest of the theme.
 
+The global theme's `defaults` name the Tela icons and Layan cursors.
+Applying it from System Settings fetches both from the KDE Store, but
+`./install.sh --apply` cannot, so if they are not installed the installer
+falls back to Breeze icons and cursors and tells you. Install Tela and
+Layan-cursors, then re-run `./install.sh --apply` to switch to them.
+
 ## Credits
 
 Layan KDE originates from
