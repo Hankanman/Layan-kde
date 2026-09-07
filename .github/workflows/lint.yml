@@ -1,0 +1,83 @@
+name: Lint and package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    name: Static checks
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y \
+            libxml2 \
+            gzip \
+            jq \
+            ShellCheck \
+            qt6-qtdeclarative-devel \
+            git
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mark workspace as safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Run tools/lint.sh
+        run: bash tools/lint.sh
+
+  rpm-build:
+    name: Build RPM
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y \
+            rpm-build \
+            rpmdevtools \
+            git
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mark workspace as safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Set up rpmbuild tree
+        run: |
+          mkdir -p "${GITHUB_WORKSPACE}/rpmbuild"/{SOURCES,SPECS,BUILD,RPMS,SRPMS,BUILDROOT}
+          echo "RPM_TOPDIR=${GITHUB_WORKSPACE}/rpmbuild" >> "$GITHUB_ENV"
+
+      - name: Read package version from spec
+        id: spec
+        run: |
+          version=$(rpmspec -q --qf '%{version}\n' packaging/layan-kde.spec | head -n1)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Build source tarball
+        run: |
+          git archive \
+            --prefix="Layan-kde-${{ steps.spec.outputs.version }}/" \
+            -o "${RPM_TOPDIR}/SOURCES/layan-kde-${{ steps.spec.outputs.version }}.tar.gz" \
+            HEAD
+
+      - name: Build RPM
+        run: rpmbuild -bb --define "_topdir ${RPM_TOPDIR}" packaging/layan-kde.spec
+
+      - name: List package contents
+        run: |
+          for pkg in "${RPM_TOPDIR}"/RPMS/noarch/*.rpm; do
+            echo "== ${pkg} =="
+            rpm -qlp "${pkg}"
+          done
+
+      - name: Upload RPM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: layan-kde-rpms
+          path: rpmbuild/RPMS/noarch/*.rpm
+          if-no-files-found: error
