@@ -9,6 +9,12 @@ its numbering).
 Modernisation for Plasma 6.7 / Fedora 44, following the plan in
 `REVIEW.md` section 7:
 
+- **Installer can fetch Tela icons and Layan cursors (B9)**
+  - New `install.sh --with-icons`, `--with-cursors` and `--full` shallow-clone
+    vinceliuice's Tela-icon-theme and Layan-cursors repos and install them
+    into the chosen scope, so `./install.sh --full --apply` yields the
+    complete intended look on a clean machine. `uninstall.sh` gained the
+    same flags to remove them.
 - **Installer icon/cursor fallback (B9)**
   - `install.sh --apply` / `--apply-light` now checks whether the Tela icon
     theme and Layan cursor theme named in the look-and-feel `defaults` are

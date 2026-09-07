@@ -24,6 +24,11 @@ APPLY_THEME=""
 USE_KVANTUM=1
 INSTALL_SDDM=0
 INSTALL_DEPS=0
+WITH_ICONS=0
+WITH_CURSORS=0
+
+TELA_REPO="https://github.com/vinceliuice/Tela-icon-theme"
+LAYAN_CURSORS_REPO="https://github.com/vinceliuice/Layan-cursors"
 
 usage() {
   cat <<EOF
@@ -43,12 +48,21 @@ Options:
                   /usr/share/sddm/themes exists -- see extras/sddm/README.md)
   --install-deps  On Fedora, run 'sudo dnf install -y kvantum kvantum-qt5'
                   if Kvantum is not already installed
+  --with-icons    Also fetch and install the Tela icon theme (Tela,
+                  Tela-dark, Tela-light) from ${TELA_REPO}
+  --with-cursors  Also fetch and install the Layan cursor themes from
+                  ${LAYAN_CURSORS_REPO}
+  --full          Shorthand for --with-icons --with-cursors
   -h, --help      Show this help
+
+--with-icons / --with-cursors / --full need git and network access. They
+clone the upstream repos to a temporary directory and install into the same
+scope (--user or --system) as the rest of the theme.
 
 Examples:
   ./install.sh
-  sudo ./install.sh --system
-  ./install.sh --apply
+  sudo ./install.sh --system --full
+  ./install.sh --full --apply
 EOF
 }
 
@@ -61,6 +75,9 @@ while [[ $# -gt 0 ]]; do
     --no-kvantum) USE_KVANTUM=0; shift ;;
     --sddm) INSTALL_SDDM=1; shift ;;
     --install-deps) INSTALL_DEPS=1; shift ;;
+    --with-icons) WITH_ICONS=1; shift ;;
+    --with-cursors) WITH_CURSORS=1; shift ;;
+    --full) WITH_ICONS=1; WITH_CURSORS=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
   esac
@@ -87,6 +104,7 @@ if [[ "$INSTALL_SCOPE" == "system" ]]; then
   KVANTUM_DIR="/usr/share/Kvantum"
   WALLPAPER_DIR="/usr/share/wallpapers"
   KONSOLE_DIR="/usr/share/konsole"
+  ICONS_DIR="/usr/share/icons"
 else
   AURORAE_DIR="${HOME}/.local/share/aurorae/themes"
   SCHEMES_DIR="${HOME}/.local/share/color-schemes"
@@ -95,6 +113,7 @@ else
   KVANTUM_DIR="${HOME}/.config/Kvantum"
   WALLPAPER_DIR="${HOME}/.local/share/wallpapers"
   KONSOLE_DIR="${HOME}/.local/share/konsole"
+  ICONS_DIR="${HOME}/.local/share/icons"
 fi
 
 mkdir -p "${AURORAE_DIR}" "${SCHEMES_DIR}" "${PLASMA_DIR}" "${LOOKFEEL_DIR}" "${WALLPAPER_DIR}" "${KONSOLE_DIR}"
@@ -248,6 +267,58 @@ if [[ "$USE_KVANTUM" -eq 1 && -r /etc/os-release ]]; then
   fi
 fi
 
+# ---------------------------------------------------------------------------
+# --with-icons / --with-cursors: fetch and install the matching Tela icons
+# and Layan cursors that the look-and-feel defaults reference.
+# ---------------------------------------------------------------------------
+FETCH_TMP=""
+cleanup_fetch_tmp() { [[ -n "$FETCH_TMP" ]] && rm -rf -- "$FETCH_TMP"; }
+trap cleanup_fetch_tmp EXIT
+
+fetch_repo() {
+  # fetch_repo URL DEST -- shallow-clone URL into DEST
+  if ! command -v git >/dev/null 2>&1; then
+    echo "Error: git is required for --with-icons/--with-cursors." >&2
+    return 1
+  fi
+  echo "Fetching $1 ..."
+  git clone --quiet --depth 1 "$1" "$2"
+}
+
+install_tela_icons() {
+  local src="${FETCH_TMP}/Tela-icon-theme"
+  fetch_repo "$TELA_REPO" "$src" || return 1
+  echo "Installing Tela icon theme into ${ICONS_DIR}"
+  mkdir -p "$ICONS_DIR"
+  # 'standard' installs Tela, Tela-dark and Tela-light.
+  bash "${src}/install.sh" -d "$ICONS_DIR" standard
+}
+
+install_layan_cursors() {
+  local src="${FETCH_TMP}/Layan-cursors"
+  fetch_repo "$LAYAN_CURSORS_REPO" "$src" || return 1
+  echo "Installing Layan cursor themes into ${ICONS_DIR}"
+  mkdir -p "$ICONS_DIR"
+  # Mirror upstream install.sh, but honour our --user/--system scope.
+  local d
+  for d in dist:Layan-cursors dist-border:Layan-border-cursors dist-white:Layan-white-cursors; do
+    local from="${src}/${d%%:*}" to="${ICONS_DIR}/${d##*:}"
+    [[ -d "$from" ]] || { echo "Warning: ${from} missing in upstream repo; skipping." >&2; continue; }
+    rm -rf -- "$to"
+    cp -r "$from" "$to"
+  done
+}
+
+if [[ "$WITH_ICONS" -eq 1 || "$WITH_CURSORS" -eq 1 ]]; then
+  FETCH_TMP="$(mktemp -d)"
+  if [[ "$WITH_ICONS" -eq 1 ]]; then
+    install_tela_icons || echo "Warning: Tela icon install failed; continuing." >&2
+  fi
+  if [[ "$WITH_CURSORS" -eq 1 ]]; then
+    install_layan_cursors || echo "Warning: Layan cursors install failed; continuing." >&2
+  fi
+fi
+
 if command -v kbuildsycoca6 >/dev/null 2>&1; then
   kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
 fi
@@ -294,7 +365,7 @@ if [[ -n "$APPLY_THEME" ]]; then
 
   if ! theme_dir_exists icons "$WANT_ICONS"; then
     echo "Icon theme ${WANT_ICONS} is not installed; using ${FALLBACK_ICONS} instead."
-    echo "  (install Tela from https://github.com/vinceliuice/Tela-icon-theme and re-run --apply to use it)"
+    echo "  (re-run with --with-icons --apply to fetch and use it)"
     CHANGEICONS=""
     for c in /usr/libexec/plasma-changeicons /usr/lib64/libexec/plasma-changeicons /usr/lib/x86_64-linux-gnu/libexec/plasma-changeicons /usr/lib/libexec/plasma-changeicons; do
       [[ -x "$c" ]] && { CHANGEICONS="$c"; break; }
@@ -308,7 +379,7 @@ if [[ -n "$APPLY_THEME" ]]; then
 
   if ! theme_dir_exists icons "$WANT_CURSORS"; then
     echo "Cursor theme ${WANT_CURSORS} is not installed; using ${FALLBACK_CURSORS} instead."
-    echo "  (install it from https://github.com/vinceliuice/Layan-cursors and re-run --apply to use it)"
+    echo "  (re-run with --with-cursors --apply to fetch and use it)"
     if command -v plasma-apply-cursortheme >/dev/null 2>&1; then
       plasma-apply-cursortheme "$FALLBACK_CURSORS" || true
     elif command -v kwriteconfig6 >/dev/null 2>&1; then

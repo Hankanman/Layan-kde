@@ -20,6 +20,8 @@ COLOR_VARIANTS=('' '-light')
 INSTALL_SCOPE=""
 USE_KVANTUM=1
 UNINSTALL_SDDM=0
+WITH_ICONS=0
+WITH_CURSORS=0
 
 usage() {
   cat <<EOF
@@ -32,6 +34,10 @@ Options:
   --user        Remove the current user's install under ~/.local (default)
   --no-kvantum  Skip removing the Kvantum theme
   --sddm        Also remove extras/sddm from /usr/share/sddm/themes (requires root)
+  --with-icons  Also remove the Tela icon themes installed by install.sh --with-icons
+  --with-cursors
+                Also remove the Layan cursor themes installed by install.sh --with-cursors
+  --full        Shorthand for --with-icons --with-cursors
   -h, --help    Show this help
 EOF
 }
@@ -42,6 +48,9 @@ while [[ $# -gt 0 ]]; do
     --user) INSTALL_SCOPE=user; shift ;;
     --no-kvantum) USE_KVANTUM=0; shift ;;
     --sddm) UNINSTALL_SDDM=1; shift ;;
+    --with-icons) WITH_ICONS=1; shift ;;
+    --with-cursors) WITH_CURSORS=1; shift ;;
+    --full) WITH_ICONS=1; WITH_CURSORS=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
   esac
@@ -68,6 +77,7 @@ if [[ "$INSTALL_SCOPE" == "system" ]]; then
   KVANTUM_DIR="/usr/share/Kvantum"
   WALLPAPER_DIR="/usr/share/wallpapers"
   KONSOLE_DIR="/usr/share/konsole"
+  ICONS_DIR="/usr/share/icons"
 else
   AURORAE_DIR="${HOME}/.local/share/aurorae/themes"
   SCHEMES_DIR="${HOME}/.local/share/color-schemes"
@@ -76,6 +86,7 @@ else
   KVANTUM_DIR="${HOME}/.config/Kvantum"
   WALLPAPER_DIR="${HOME}/.local/share/wallpapers"
   KONSOLE_DIR="${HOME}/.local/share/konsole"
+  ICONS_DIR="${HOME}/.local/share/icons"
 fi
 
 remove_exact() {
@@ -113,6 +124,18 @@ fi
 for f in "Layan.colorscheme" "LayanLight.colorscheme" "Layan.profile" "LayanLight.profile"; do
   remove_exact "${KONSOLE_DIR}/${f}"
 done
+
+if [[ "$WITH_ICONS" -eq 1 ]]; then
+  for t in Tela Tela-dark Tela-light; do
+    remove_exact "${ICONS_DIR}/${t}"
+  done
+fi
+
+if [[ "$WITH_CURSORS" -eq 1 ]]; then
+  for t in Layan-cursors Layan-border-cursors Layan-white-cursors; do
+    remove_exact "${ICONS_DIR}/${t}"
+  done
+fi
 
 if [[ "$UNINSTALL_SDDM" -eq 1 ]]; then
   if [[ "$EUID" -ne "$ROOT_UID" ]]; then

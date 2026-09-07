@@ -133,10 +133,18 @@ pair it with vinceliuice's other Layan packages:
   for a more consistent look with the rest of the theme.
 
 The global theme's `defaults` name the Tela icons and Layan cursors.
-Applying it from System Settings fetches both from the KDE Store, but
-`./install.sh --apply` cannot, so if they are not installed the installer
-falls back to Breeze icons and cursors and tells you. Install Tela and
-Layan-cursors, then re-run `./install.sh --apply` to switch to them.
+The easiest way to get both is to let the installer fetch them:
+
+```sh
+./install.sh --full --apply          # --full = --with-icons --with-cursors
+```
+
+This shallow-clones the upstream Tela and Layan-cursors repos and installs
+them into the same scope (`--user` or `--system`) as the rest of the theme;
+`./uninstall.sh --full` removes them again. Applying from System Settings
+fetches them from the KDE Store instead. If neither has happened and the
+themes are missing, `--apply` falls back to Breeze icons and cursors and
+tells you how to switch.
 
 ## Credits
 
