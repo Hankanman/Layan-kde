@@ -9,6 +9,10 @@
 
 set -euo pipefail
 
+# private scratch dir for tool output (avoids predictable /tmp names)
+LINT_TMP="$(mktemp -d)"
+trap 'rm -rf "$LINT_TMP"' EXIT
+
 # ---------------------------------------------------------------------------
 # setup
 # ---------------------------------------------------------------------------
@@ -77,25 +81,25 @@ if [[ "${HAVE_XMLLINT}" -eq 1 ]]; then
   while IFS= read -r f; do
     [[ -z "$f" ]] && continue
     SVG_COUNT=$((SVG_COUNT + 1))
-    if ! xmllint --noout "$f" 2>/tmp/lint_xmllint_err.$$; then
-      err "malformed SVG: $f -- $(tr '\n' ' ' </tmp/lint_xmllint_err.$$)"
+    if ! xmllint --noout "$f" 2>"$LINT_TMP"/lint_xmllint_err.$$; then
+      err "malformed SVG: $f -- $(tr '\n' ' ' <"$LINT_TMP"/lint_xmllint_err.$$)"
     fi
-    rm -f /tmp/lint_xmllint_err.$$
+    rm -f "$LINT_TMP"/lint_xmllint_err.$$
   done < <(find_files '*.svg')
 
   while IFS= read -r f; do
     [[ -z "$f" ]] && continue
     SVGZ_COUNT=$((SVGZ_COUNT + 1))
-    if ! gzip -t "$f" 2>/tmp/lint_gzip_err.$$; then
-      err "corrupt gzip in SVGZ: $f -- $(tr '\n' ' ' </tmp/lint_gzip_err.$$)"
-      rm -f /tmp/lint_gzip_err.$$
+    if ! gzip -t "$f" 2>"$LINT_TMP"/lint_gzip_err.$$; then
+      err "corrupt gzip in SVGZ: $f -- $(tr '\n' ' ' <"$LINT_TMP"/lint_gzip_err.$$)"
+      rm -f "$LINT_TMP"/lint_gzip_err.$$
       continue
     fi
-    rm -f /tmp/lint_gzip_err.$$
-    if ! zcat "$f" 2>/dev/null | xmllint --noout - 2>/tmp/lint_xmllint_err.$$; then
-      err "malformed SVGZ (decompressed XML): $f -- $(tr '\n' ' ' </tmp/lint_xmllint_err.$$)"
+    rm -f "$LINT_TMP"/lint_gzip_err.$$
+    if ! zcat "$f" 2>/dev/null | xmllint --noout - 2>"$LINT_TMP"/lint_xmllint_err.$$; then
+      err "malformed SVGZ (decompressed XML): $f -- $(tr '\n' ' ' <"$LINT_TMP"/lint_xmllint_err.$$)"
     fi
-    rm -f /tmp/lint_xmllint_err.$$
+    rm -f "$LINT_TMP"/lint_xmllint_err.$$
   done < <(find_files '*.svgz')
 else
   missing_tool_warning "xmllint" "skipping SVG/SVGZ XML well-formedness checks"
@@ -187,10 +191,10 @@ command -v jq >/dev/null 2>&1 || HAVE_JQ=0
 if [[ "${HAVE_JQ}" -eq 1 ]]; then
   while IFS= read -r f; do
     [[ -z "$f" ]] && continue
-    if ! jq empty "$f" >/tmp/lint_jq_err.$$ 2>&1; then
-      err "invalid JSON: $f -- $(tr '\n' ' ' </tmp/lint_jq_err.$$)"
+    if ! jq empty "$f" >"$LINT_TMP"/lint_jq_err.$$ 2>&1; then
+      err "invalid JSON: $f -- $(tr '\n' ' ' <"$LINT_TMP"/lint_jq_err.$$)"
     fi
-    rm -f /tmp/lint_jq_err.$$
+    rm -f "$LINT_TMP"/lint_jq_err.$$
   done < <(find_files 'metadata.json')
 else
   missing_tool_warning "jq" "skipping metadata.json validation"
@@ -242,16 +246,16 @@ SH_COUNT=0
 while IFS= read -r f; do
   [[ -z "$f" ]] && continue
   SH_COUNT=$((SH_COUNT + 1))
-  if ! bash -n "$f" 2>/tmp/lint_bashn_err.$$; then
-    err "bash -n failed: $f -- $(tr '\n' ' ' </tmp/lint_bashn_err.$$)"
+  if ! bash -n "$f" 2>"$LINT_TMP"/lint_bashn_err.$$; then
+    err "bash -n failed: $f -- $(tr '\n' ' ' <"$LINT_TMP"/lint_bashn_err.$$)"
   fi
-  rm -f /tmp/lint_bashn_err.$$
+  rm -f "$LINT_TMP"/lint_bashn_err.$$
   if [[ "${HAVE_SHELLCHECK}" -eq 1 ]]; then
-    if ! shellcheck "$f" >/tmp/lint_shellcheck_out.$$ 2>&1; then
+    if ! shellcheck "$f" >"$LINT_TMP"/lint_shellcheck_out.$$ 2>&1; then
       err "shellcheck findings in $f:"
-      sed 's/^/    /' /tmp/lint_shellcheck_out.$$ >&2
+      sed 's/^/    /' "$LINT_TMP"/lint_shellcheck_out.$$ >&2
     fi
-    rm -f /tmp/lint_shellcheck_out.$$
+    rm -f "$LINT_TMP"/lint_shellcheck_out.$$
   fi
 done < <(find_files '*.sh')
 
@@ -276,11 +280,11 @@ if [[ "${HAVE_QMLLINT}" -eq 1 ]]; then
   while IFS= read -r f; do
     [[ -z "$f" ]] && continue
     QML_COUNT=$((QML_COUNT + 1))
-    if ! qmllint "$f" >/tmp/lint_qmllint_out.$$ 2>&1; then
+    if ! qmllint "$f" >"$LINT_TMP"/lint_qmllint_out.$$ 2>&1; then
       err "qmllint findings in $f:"
-      sed 's/^/    /' /tmp/lint_qmllint_out.$$ >&2
+      sed 's/^/    /' "$LINT_TMP"/lint_qmllint_out.$$ >&2
     fi
-    rm -f /tmp/lint_qmllint_out.$$
+    rm -f "$LINT_TMP"/lint_qmllint_out.$$
   done < <(find_files '*.qml')
   info "checked ${QML_COUNT} QML files"
 else
