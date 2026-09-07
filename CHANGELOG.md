@@ -9,6 +9,31 @@ its numbering).
 Modernisation for Plasma 6.7 / Fedora 44, following the plan in
 `REVIEW.md` section 7:
 
+- **Lucide-based symbolic icon theme (`Layan-lucide`, `Layan-lucide-dark`)**
+  - Plasma 6.7 takes system tray and panel icons from the icon theme (via
+    Kirigami.Icon -> KIconLoader), not from `plasma/desktoptheme/*/icons/*`
+    any more, so this fork ships its own icon theme instead of relying on
+    Tela alone. `tools/gen-lucide-icons.py` (stdlib-only Python) maps ~326
+    KDE icon names to Lucide (https://lucide.dev, ISC licence) stroke icons
+    vendored under `tools/lucide-src/` and generates
+    `icons/Layan-lucide-dark` and `icons/Layan-lucide` -- one committed,
+    build-free icon theme tree per variant, with `FollowsColorScheme=true`
+    and the standard `ColorScheme-Text` stylesheet so KIconLoader recolours
+    the icons to match the active colour scheme. Both themes
+    `Inherits=Tela(-dark),breeze(-dark),hicolor` for full-colour app icons
+    and anything Lucide doesn't cover.
+  - `install.sh` now always installs `icons/Layan-lucide*` into
+    `${ICONS_DIR}` (running `gtk-update-icon-cache` when available); this is
+    not gated behind `--with-icons` (that flag remains Tela-only).
+    `uninstall.sh` removes them unconditionally to match.
+  - The look-and-feel `defaults` now set `[kdeglobals][Icons]
+    Theme=Layan-lucide-dark` / `Theme=Layan-lucide` instead of `Tela-dark`
+    / `Tela`. Since `Layan-lucide(-dark)` is always installed and already
+    falls back to Breeze via `Inherits=`, `install.sh --apply`'s icon-theme
+    existence check/fallback was removed as no longer needed (the cursor
+    theme fallback, still gated behind `--with-cursors`, is unchanged).
+  - `packaging/layan-kde.spec` ships `/usr/share/icons/Layan-lucide` and
+    `/usr/share/icons/Layan-lucide-dark` in the main package.
 - **Installer restarts plasmashell after --apply (B29)**
   - Plasma 6.7's system tray keeps its item layout but renders the monochrome
     icons blank when the icon theme is switched while the shell is running;

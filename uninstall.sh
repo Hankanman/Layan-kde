@@ -125,6 +125,11 @@ for f in "Layan.colorscheme" "LayanLight.colorscheme" "Layan.profile" "LayanLigh
   remove_exact "${KONSOLE_DIR}/${f}"
 done
 
+# Layan-lucide / Layan-lucide-dark icon theme (installed unconditionally by
+# install.sh, not gated behind --with-icons -- that flag is only for Tela).
+remove_exact "${ICONS_DIR}/Layan-lucide"
+remove_exact "${ICONS_DIR}/Layan-lucide-dark"
+
 if [[ "$WITH_ICONS" -eq 1 ]]; then
   for t in Tela Tela-dark Tela-light; do
     remove_exact "${ICONS_DIR}/${t}"

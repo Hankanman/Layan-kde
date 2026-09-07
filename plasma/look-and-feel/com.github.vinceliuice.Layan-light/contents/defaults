@@ -8,7 +8,7 @@ DefaultLightLookAndFeel=com.github.vinceliuice.Layan-light
 ColorScheme=LayanLight
 
 [kdeglobals][Icons]
-Theme=Tela
+Theme=Layan-lucide
 
 [plasmarc][Theme]
 name=Layan-light

@@ -91,6 +91,14 @@ cp -a plasma/look-and-feel/. %{buildroot}%{_datadir}/plasma/look-and-feel/
 install -d -m0755 %{buildroot}%{_datadir}/wallpapers
 cp -a wallpaper/. %{buildroot}%{_datadir}/wallpapers/
 
+# --- Lucide-based symbolic icon theme (icons/Layan-lucide{,-dark}) --------
+# Generated ahead of time by tools/gen-lucide-icons.py and committed to the
+# repo, so packaging needs no node/python-svg build dependency.
+install -d -m0755 %{buildroot}%{_datadir}/icons
+if [ -d icons ]; then
+    cp -a icons/. %{buildroot}%{_datadir}/icons/
+fi
+
 # --- Optional file lists -----------------------------------------------------
 # konsole/ and the sddm source directory may or may not exist yet in this
 # checkout (both are being added/moved by concurrent work). Build the file
@@ -108,6 +116,8 @@ cat > main.files <<EOF
 %{_datadir}/plasma/desktoptheme/Layan-light
 %{_datadir}/plasma/look-and-feel/*
 %{_datadir}/wallpapers/*
+%{_datadir}/icons/Layan-lucide
+%{_datadir}/icons/Layan-lucide-dark
 EOF
 
 # --- Konsole colour scheme / profile (optional, may not exist yet) ----------
