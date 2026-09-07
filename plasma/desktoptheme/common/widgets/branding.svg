@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Layan widgets/branding.svg
+
+  Breeze's default/widgets/branding.svgz is a single embedded raster
+  (base64 PNG watermark) with no reusable element ids, which is
+  unsuitable to ship and recolour for a themed asset. This is an
+  original, lightweight vector replacement: a thin accent bar using
+  the theme's current-color-scheme classes. See ATTRIBUTION.md.
+-->
+<svg
+   width="80"
+   height="15"
+   version="1.1"
+   viewBox="0 0 80 15"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs1">
+    <style id="current-color-scheme" type="text/css">
+      .ColorScheme-Text {
+        color:#31313A;
+        stop-color:#31313A;
+      }
+      .ColorScheme-Highlight {
+        color:#5657f5;
+        stop-color:#5657f5;
+      }
+    </style>
+  </defs>
+  <g id="branding">
+    <rect
+       id="accent-bar"
+       class="ColorScheme-Highlight"
+       fill="currentColor"
+       opacity="0.85"
+       x="0"
+       y="6"
+       width="80"
+       height="3"
+       rx="1.5"
+       ry="1.5" />
+    <circle
+       id="accent-dot"
+       class="ColorScheme-Highlight"
+       fill="currentColor"
+       cx="4"
+       cy="7.5"
+       r="4" />
+  </g>
+</svg>
