@@ -1,4 +1,5 @@
 {
+    "KPackageStructure": "KWin/Aurorae",
     "KPlugin": {
         "Authors": [
             {
@@ -6,13 +7,18 @@
                 "Name": "Vince Liuice"
             }
         ],
-        "Category": "",
-        "Dependencies": [
+        "Category": "Plasma 6 Window Decorations",
+        "ServiceTypes": [
+            "aurorae"
         ],
         "EnabledByDefault": true,
+        "Name": "Layan-solid",
+        "Description" : "Layan-solid window decorations",
         "Id": "Layan-solid",
         "License": "GPL v3",
-        "Name": "Layan-solid",
-        "Version": "1.0"
+        "Version": "1.0",
+        "X-KDE-PluginInfo-blur": true,
+        "X-KPackage-Dependencies": [
+        ]
     }
 }

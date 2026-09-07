@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4306"
+   width="22"
+   height="22"
+   enable-background="new"
+   version="1.1"
+   sodipodi:docname="help.svg">
+  <metadata
+     id="metadata29">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs27" />
+  <g
+     id="active-center">
+    <circle
+       id="active-center-bg"
+       cx="11"
+       cy="11"
+       r="8"
+       style="opacity:0.5;fill:#b2b2b2" />
+    <path
+       id="help-active-hook"
+       d="M 8.6,8.4 C 8.6,6.9 9.7,5.8 11,5.8 C 12.3,5.8 13.4,6.9 13.4,8.2 C 13.4,9.6 12.2,10 11.4,10.8 C 11.1,11.1 11,11.5 11,12.1"
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+    <circle
+       id="help-active-dot"
+       cx="11"
+       cy="15"
+       r="1.1"
+       style="fill:#ffffff" />
+    <rect
+       id="active-center-bounds"
+       x="3"
+       y="3"
+       width="16"
+       height="16"
+       fill="none" />
+  </g>
+  <g
+     id="hover-center">
+    <circle
+       id="hover-center-bg"
+       cx="11"
+       cy="11"
+       r="8"
+       style="opacity:0.65;fill:#b2b2b2" />
+    <path
+       id="help-hover-hook"
+       d="M 8.6,8.4 C 8.6,6.9 9.7,5.8 11,5.8 C 12.3,5.8 13.4,6.9 13.4,8.2 C 13.4,9.6 12.2,10 11.4,10.8 C 11.1,11.1 11,11.5 11,12.1"
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+    <circle
+       id="help-hover-dot"
+       cx="11"
+       cy="15"
+       r="1.1"
+       style="fill:#ffffff" />
+    <rect
+       id="hover-center-bounds"
+       x="3"
+       y="3"
+       width="16"
+       height="16"
+       fill="none" />
+  </g>
+  <g
+     id="pressed-center">
+    <circle
+       id="pressed-center-bg"
+       cx="11"
+       cy="11"
+       r="8"
+       style="opacity:0.8;fill:#b2b2b2" />
+    <path
+       id="help-pressed-hook"
+       d="M 8.6,8.4 C 8.6,6.9 9.7,5.8 11,5.8 C 12.3,5.8 13.4,6.9 13.4,8.2 C 13.4,9.6 12.2,10 11.4,10.8 C 11.1,11.1 11,11.5 11,12.1"
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+    <circle
+       id="help-pressed-dot"
+       cx="11"
+       cy="15"
+       r="1.1"
+       style="fill:#ffffff" />
+    <rect
+       id="pressed-center-bounds"
+       x="3"
+       y="3"
+       width="16"
+       height="16"
+       fill="none" />
+  </g>
+  <g
+     id="inactive-center" opacity=".5">
+    <circle
+       id="inactive-center-bg"
+       cx="11"
+       cy="11"
+       r="8"
+       style="opacity:0.5;fill:#888888" />
+    <path
+       id="help-inactive-hook"
+       d="M 8.6,8.4 C 8.6,6.9 9.7,5.8 11,5.8 C 12.3,5.8 13.4,6.9 13.4,8.2 C 13.4,9.6 12.2,10 11.4,10.8 C 11.1,11.1 11,11.5 11,12.1"
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+    <circle
+       id="help-inactive-dot"
+       cx="11"
+       cy="15"
+       r="1.1"
+       style="fill:#ffffff" />
+    <rect
+       id="inactive-center-bounds"
+       x="3"
+       y="3"
+       width="16"
+       height="16"
+       fill="none" />
+  </g>
+  <g
+     id="deactivated-center" opacity=".5">
+    <circle
+       id="deactivated-center-bg"
+       cx="11"
+       cy="11"
+       r="8"
+       style="opacity:0.5;fill:#888888" />
+    <path
+       id="help-deactivated-hook"
+       d="M 8.6,8.4 C 8.6,6.9 9.7,5.8 11,5.8 C 12.3,5.8 13.4,6.9 13.4,8.2 C 13.4,9.6 12.2,10 11.4,10.8 C 11.1,11.1 11,11.5 11,12.1"
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+    <circle
+       id="help-deactivated-dot"
+       cx="11"
+       cy="15"
+       r="1.1"
+       style="fill:#ffffff" />
+    <rect
+       id="deactivated-center-bounds"
+       x="3"
+       y="3"
+       width="16"
+       height="16"
+       fill="none" />
+  </g>
+</svg>
