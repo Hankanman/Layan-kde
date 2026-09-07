@@ -26,7 +26,7 @@ var layout = {
                     "ToolBoxButtonY": "32"
                 },
                 "/Wallpaper/org.kde.image/General": {
-                    "Image": "file:///usr/share/wallpapers/Elarun/contents/images/2560x1600.png"
+                    "Image": "file:///usr/share/wallpapers/Layan-light/contents/images/2560x1440.png"
                 }
             },
             "wallpaperPlugin": "org.kde.image"
@@ -34,7 +34,7 @@ var layout = {
     ],
     "panels": [
         {
-            "alignment": "left",
+            "alignment": "center",
             "applets": [
                 {
                     "config": {
@@ -61,12 +61,9 @@ var layout = {
                     "config": {
                         "/": {
                             "immutability": "1"
-                        },
-                        "/Configuration": {
-                            "PreloadWeight": "42"
                         }
                     },
-                    "plugin": "org.kde.plasma.appmenu"
+                    "plugin": "org.kde.plasma.icontasks"
                 },
                 {
                     "config": {
@@ -97,29 +94,17 @@ var layout = {
                         },
                         "/Configuration": {
                             "PreloadWeight": "72"
-                        },
-                        "/Configuration/Appearance": {
-                            "displayTimezoneAsCode": "false",
-                            "spinboxHorizontalPercentage": "60",
-                            "use24hFormat": "2"
-                        },
-                        "/Configuration/ConfigDialog": {
-                            "DialogHeight": "540",
-                            "DialogWidth": "720"
                         }
                     },
-                    "plugin": "org.kde.plasma.splitdigitalclock"
+                    "plugin": "org.kde.plasma.digitalclock"
                 },
                 {
                     "config": {
                         "/": {
                             "immutability": "1"
-                        },
-                        "/Configuration": {
-                            "PreloadWeight": "52"
                         }
                     },
-                    "plugin": "org.kde.milou"
+                    "plugin": "org.kde.plasma.showdesktop"
                 }
             ],
             "config": {
@@ -137,7 +122,8 @@ var layout = {
                     "PreloadWeight": "42"
                 }
             },
-            "height": 1.7777777777777777,
+            "floating": "1",
+            "height": 2.0,
             "hiding": "normal",
             "location": "top",
             "maximumLength": 75.88888888888889,
