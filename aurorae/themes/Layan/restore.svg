@@ -53,14 +53,6 @@
        type="xygrid"
        id="grid74" />
   </sodipodi:namedview>
-  <use
-     x="0"
-     y="0"
-     xlink:href="#g1000"
-     id="use1002"
-     transform="translate(28.476029)"
-     width="100%"
-     height="100%" />
   <g
      style="display:inline"
      id="hover-center"
@@ -125,7 +117,7 @@
          transform="translate(-81.0002,-967)">
         <path
            id="path4882-7"
-           style="opacity:0.75;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
            d="m 84.867887,975.15909 h 3.381737 c 0.450297,0 0.816227,0.36847 0.818758,0.8188 v 3.3817 z"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="csscc" />
@@ -133,7 +125,7 @@
            sodipodi:nodetypes="csscc"
            inkscape:connector-curvature="0"
            d="m 93.591109,975.06414 h -3.381737 c -0.450297,0 -0.816227,-0.36847 -0.818758,-0.8188 v -3.3817 z"
-           style="opacity:0.75;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
            id="path5284-0" />
       </g>
     </g>

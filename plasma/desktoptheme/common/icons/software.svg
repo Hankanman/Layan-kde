@@ -151,33 +151,9 @@
   <use
      x="0"
      y="0"
-     xlink:href="#g878"
-     id="use880"
-     transform="translate(-27.32783)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#use880"
-     id="use882"
-     transform="translate(-24.481181,0.18977659)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
      xlink:href="#software-updates-updates"
      id="software-updates-additional"
      transform="translate(-2.7600116,52.536911)"
-     width="100%"
-     height="100%" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#use884"
-     id="use886"
-     transform="translate(-27.897159,0.75910638)"
      width="100%"
      height="100%" />
   <use

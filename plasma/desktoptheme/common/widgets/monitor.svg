@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Layan widgets/monitor.svg
+
+  Breeze's default/widgets/monitor.svgz embeds a large (1.2MB) raster
+  screenshot with no reusable element ids, which is unsuitable to ship
+  and recolour for a themed asset. This is an original, lightweight
+  vector replacement: a simple monitor/display bezel using the theme's
+  current-color-scheme classes, with a 10px corner radius to match the
+  rest of the Layan element set. See ATTRIBUTION.md.
+-->
+<svg
+   width="200"
+   height="140"
+   version="1.1"
+   viewBox="0 0 200 140"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs1">
+    <style id="current-color-scheme" type="text/css">
+      .ColorScheme-Text {
+        color:#31313A;
+        stop-color:#31313A;
+      }
+      .ColorScheme-Background {
+        color:#f4f4f9;
+        stop-color:#f4f4f9;
+      }
+      .ColorScheme-Highlight {
+        color:#5657f5;
+        stop-color:#5657f5;
+      }
+      .ColorScheme-Frame {
+        color:#31313A;
+        stop-color:#31313A;
+      }
+    </style>
+  </defs>
+  <g id="monitor">
+    <rect
+       id="bezel"
+       class="ColorScheme-Frame"
+       fill="currentColor"
+       fill-opacity="0.85"
+       x="0"
+       y="0"
+       width="200"
+       height="124"
+       rx="10"
+       ry="10" />
+    <rect
+       id="screen"
+       class="ColorScheme-Background"
+       fill="currentColor"
+       x="8"
+       y="8"
+       width="184"
+       height="108"
+       rx="4"
+       ry="4" />
+    <rect
+       id="screen-highlight"
+       class="ColorScheme-Highlight"
+       fill="currentColor"
+       opacity="0.12"
+       x="8"
+       y="8"
+       width="184"
+       height="36"
+       rx="4"
+       ry="4" />
+    <rect
+       id="stand-neck"
+       class="ColorScheme-Frame"
+       fill="currentColor"
+       fill-opacity="0.85"
+       x="92"
+       y="124"
+       width="16"
+       height="10" />
+    <rect
+       id="stand-base"
+       class="ColorScheme-Frame"
+       fill="currentColor"
+       fill-opacity="0.85"
+       x="64"
+       y="134"
+       width="72"
+       height="6"
+       rx="3"
+       ry="3" />
+  </g>
+</svg>

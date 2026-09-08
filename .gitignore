@@ -1,0 +1,5 @@
+*.rpm
+rpmbuild/
+*.tar.gz
+.worktrees/
+.claude/worktrees/

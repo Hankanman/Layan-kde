@@ -1,14 +1,23 @@
-[kcminputrc][Mouse]
-cursorTheme=Layan-white-cursors
+[kdeglobals][KDE]
+widgetStyle=kvantum
+LookAndFeelPackage=com.github.vinceliuice.Layan-light
+DefaultDarkLookAndFeel=com.github.vinceliuice.Layan
+DefaultLightLookAndFeel=com.github.vinceliuice.Layan-light
 
 [kdeglobals][General]
 ColorScheme=LayanLight
 
 [kdeglobals][Icons]
-Theme=Tela-circle
+Theme=Layan-lucide
 
-[kdeglobals][KDE]
-widgetStyle=kvantum
+[plasmarc][Theme]
+name=Layan-light
+
+[Wallpaper]
+Image=Layan-light
+
+[kcminputrc][Mouse]
+cursorTheme=Layan-white-cursors
 
 [kwinrc][DesktopSwitcher]
 LayoutName=org.kde.breeze.desktop
@@ -19,8 +28,8 @@ LayoutName=org.kde.breeze.desktop
 [kwinrc][org.kde.kdecoration2]
 ButtonsOnLeft=
 ButtonsOnRight=IAX
-library=org.kde.kwin.aurorae
+library=org.kde.kwin.aurorae.v2
 theme=__aurorae__svg__Layan-light
 
-[plasmarc][Theme]
-name=Layan-light
+[ksplashrc][KSplash]
+Theme=com.github.vinceliuice.Layan-light

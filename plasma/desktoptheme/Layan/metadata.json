@@ -16,5 +16,6 @@
         "Name": "Layan",
         "Version": "0.1",
         "Website": "https://github.com/vinceliuice/Layan-kde"
-    }
+    },
+    "X-Plasma-API": "5.0"
 }
